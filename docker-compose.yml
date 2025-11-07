@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  anli-api:
+    build: .
+    container_name: anli-classifier
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models:ro
+    environment:
+      - MODEL_PATH=/app/models/anli_deberta_model
+      - MAX_LENGTH=256
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
