@@ -21,7 +21,8 @@ app = FastAPI(
 )
 
 # Global variables
-MODEL_PATH = "./models/anli_deberta_model"
+#MODEL_PATH = "./models/anli_deberta_model"
+MODEL_PATH = "./models/saved_model_debertav3_anli_r2_tpu"
 MAX_LENGTH = 256
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 LABEL_NAMES = {0: 'Entailment', 1: 'Neutral', 2: 'Contradiction'}
