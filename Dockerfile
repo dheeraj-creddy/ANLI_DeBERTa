@@ -17,6 +17,7 @@ COPY src/ ./src/
 #COPY models/ ./models/
 COPY download_model.sh .
 RUN chmod +x download_model.sh
+RUN ./download_model.sh
 
 # Expose port
 EXPOSE 8000
