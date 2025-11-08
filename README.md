@@ -453,7 +453,7 @@ The trained model is hosted on Google Drive due to size constraints (703 MB).
 **Download Link**: [Google Drive](https://drive.google.com/drive/folders/1jhkLh1DYuC3vY5DWm92SaP1Pe_8LmEPu?usp=sharing)
 
 **Manual Setup**:
-```bash
+
 # 1. Download from Google Drive
 # 2. Extract to project root
 # 3. Verify structure:
@@ -463,7 +463,7 @@ models/
     ├── model.safetensors
     ├── tokenizer_config.json
     └── ... (other tokenizer files)
-```
+
 
 **Automatic Setup** (for Render):
 The `download_model.sh` script automatically downloads the model on first deployment.

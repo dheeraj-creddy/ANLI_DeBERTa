@@ -9,7 +9,7 @@ services:
     volumes:
       - ./models:/app/models:ro
     environment:
-      - MODEL_PATH=/app/models/anli_deberta_model
+      - MODEL_PATH=./models/saved_model_debertav3_anli_r2_tpu #/app/models/anli_deberta_model
       - MAX_LENGTH=256
     restart: unless-stopped
     healthcheck:

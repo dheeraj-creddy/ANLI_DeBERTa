@@ -6,3 +6,5 @@ tokenizers>=0.22.0
 numpy<2
 pydantic==2.5.0
 python-multipart==0.0.19
+protobuf>=3.20.0
+sentencepiece

@@ -1,6 +1,7 @@
 """
 FastAPI Inference API for ANLI Classification
 """
+import os
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
@@ -22,7 +23,7 @@ app = FastAPI(
 
 # Global variables
 #MODEL_PATH = "./models/anli_deberta_model"
-MODEL_PATH = "./models/saved_model_debertav3_anli_r2_tpu"
+MODEL_PATH = "/app/models/saved_model_debertav3_anli_r2_tpu"
 MAX_LENGTH = 256
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 LABEL_NAMES = {0: 'Entailment', 1: 'Neutral', 2: 'Contradiction'}
@@ -59,11 +60,22 @@ async def load_model():
     global model, tokenizer
 
     try:
+        # Wait for the big model file (738MB)
+        for i in range(120):  # 2 minutes max
+            if os.path.exists(MODEL_PATH):
+                logger.info(f"✓ Model file ready! ({os.path.getsize(MODEL_PATH) / 1e9:.2f}GB)")
+                break
+            if i % 10 == 0:
+                logger.info(f"Waiting for model.safetensors... ({i}s)")
+            time.sleep(1)
+        else:
+            raise FileNotFoundError("model.safetensors not downloaded")
+
         logger.info(f"Loading model from {MODEL_PATH}")
         logger.info(f"Using device: {DEVICE}")
 
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-        model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, local_files_only=True, use_fast=False, trust_remote_code=True)
+        model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH, local_files_only=True, trust_remote_code=True)
         model.to(DEVICE)
         model.eval()
 

@@ -52,3 +52,4 @@ Thumbs.db
 !logs/.gitkeep
 
 models/anli_deberta_model/
+models/saved_model_debertav3_anli_r2_tpu
