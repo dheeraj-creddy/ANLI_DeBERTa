@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application
 COPY src/ ./src/
-COPY models/ ./models/
+#COPY models/ ./models/
 COPY download_model.sh .
 RUN chmod +x download_model.sh
 RUN ./download_model.sh
